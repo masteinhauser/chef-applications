@@ -23,9 +23,12 @@ case node["platform_family"]
         end
 end
 
-directory "#{node['etc']['passwd'][node['current_user']]['dir']}/.vagrant.d/" do
+%w( /.vagrant.d /.vagrant.d/gems ).each do |path|
+  directory node['etc']['passwd'][node['current_user']]['dir'] + path do
     owner node['current_user']
     recursive true
+    mode 00755
+  end
 end
 
 node["vagrant_plugins"].each do |plugin|
