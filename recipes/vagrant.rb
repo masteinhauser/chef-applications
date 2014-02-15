@@ -23,6 +23,11 @@ case node["platform_family"]
         end
 end
 
+directory "#{node['etc']['passwd'][node['current_user']]['dir']}/.vagrant.d/" do
+    owner node['current_user']
+    recursive true
+end
+
 node["vagrant_plugins"].each do |plugin|
     execute "install vagrant plugin #{plugin}" do
         command "vagrant plugin install #{plugin}"
